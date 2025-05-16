@@ -1,0 +1,54 @@
+dataset_path: annonymousa378/neurips_submission_23
+dataset_name: multi_binary
+test_split: test
+dataset_kwargs:
+  token: False
+  cache_dir: videomath
+  video: True
+task: videomath_mbin_cot_w_subtitles
+output_type: generate_until
+doc_to_visual: !function utils.videomath_doc_to_visual
+doc_to_text: !function utils.videomath_doc_to_text_subtitle
+doc_to_target: "answer"
+generation_kwargs:
+  max_new_tokens: 8096
+  temperature: 0
+  top_p: 1.0
+  num_beams: 1
+  do_sample: false
+process_results: !function utils.videomath_process_results
+metric_list:
+  - metric: videomath_perception_score
+    aggregation: !function utils.multi_binary_aggregate_results
+    higher_is_better: true
+lmms_eval_specific_kwargs:
+  default:
+    frame_num: 32
+    pre_prompt: ""
+    post_prompt: "First please perform reasoning, and think step by step to provide best answer to the following question with the option's letter (A or B) from the given choices."
+  aria:
+    frame_num: 128
+    pre_prompt: ""
+    post_prompt: "First please perform reasoning, and think step by step to provide best answer to the following question with the option's letter (A or B) from the given choices."
+  internvideo2_5:
+    frame_num: 512
+    pre_prompt: ""
+    post_prompt: "First please perform reasoning, and think step by step to provide best answer to the following question with the option's letter (A or B) from the given choices."
+  llava_vid:
+    frame_num: 64
+    pre_prompt: ""
+    post_prompt: "First please perform reasoning, and think step by step to provide best answer to the following question with the option's letter (A or B) from the given choices."
+  longva:
+    frame_num: 128
+    pre_prompt: ""
+    post_prompt: "First please perform reasoning, and think step by step to provide best answer to the following question with the option's letter (A or B) from the given choices."
+  qwen2_5_vl:
+    frame_num: 768
+    pre_prompt: ""
+    post_prompt: "First please perform reasoning, and think step by step to provide best answer to the following question with the option's letter (A or B) from the given choices."
+  gemini_api:
+    gemini_api_flag: "full subtitle"
+    pre_prompt: ""
+    post_prompt: "First please perform reasoning, and think step by step to provide best answer to the following question with the option's letter (A or B) from the given choices."
+metadata:
+  - version: 0.0
